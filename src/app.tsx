@@ -1,3 +1,6 @@
+import { Form } from "./components/form";
+import { FormProvider } from "./contexts/form";
+
 export const App = () => {
-  return <div>Hi from React!</div>;
+  return <FormProvider><Form /></FormProvider>;
 }
