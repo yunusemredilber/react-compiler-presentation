@@ -3,7 +3,7 @@ export const renderStatsData = {
   'city-option': 0,
 };
 
-const renderStatsEl = document.getElementById('render-stats')!;
+const renderStatsEl = document.querySelector('#render-stats > ul')!;
 
 export const increaseRenderCount = (key: keyof typeof renderStatsData): void => {
   renderStatsData[key] += 1;

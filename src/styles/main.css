@@ -1,0 +1,39 @@
+body {
+  font-family: "Sour Gummy", sans-serif;
+  font-optical-sizing: auto;
+  font-weight: 400;
+  font-style: normal;
+  font-variation-settings:
+  "wdth" 100;
+}
+
+main {
+  padding: 20px;
+}
+
+footer {
+  position: absolute;
+  inset-inline-start: 0;
+  inset-block-end: 0;
+}
+
+h1 {
+  font-size: 1.5em;
+}
+
+.input-wrapper {
+  display: flex;
+  flex-direction: column;
+  margin-block-end: 10px;
+}
+
+.select-wrapper {
+  display: flex;
+  gap: 10px;
+  margin-block-end: 10px;
+}
+
+.hint {
+  font-size: 0.8em;
+  color: #666;
+}

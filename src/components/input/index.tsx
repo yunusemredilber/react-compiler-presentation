@@ -11,7 +11,7 @@ export const Input = ({ label, hint, ...inputProps }: InputProps) => {
     <div className="input-wrapper">
       <label htmlFor={inputProps.id}>{label}</label>
       <input {...inputProps} aria-describedby={`${inputProps.id}-hint`} />
-      <span id={`${inputProps.id}-hint`}>{hint}</span>
+      <span id={`${inputProps.id}-hint`} className="hint">{hint}</span>
     </div>
   );
 }

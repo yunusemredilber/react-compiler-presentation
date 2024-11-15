@@ -4,7 +4,11 @@
   "main": "index.js",
   "author": "Yunus Emre Dilber",
   "scripts": {
-    "dev": "concurrently \"webpack --mode development --watch\" \"serve\"",
+    "build:dev": "webpack --mode development",
+    "build:dev:watch": "yarn build:dev --watch",
+    "build:non-react-compiled-version:dev": "webpack --mode development --config ./non-react-compiler-webpack.config.ts",
+    "build:non-react-compiled-version:dev:watch": "yarn build:non-react-compiled-version:dev --watch",
+    "dev": "concurrently \"yarn build:dev:watch\" \"yarn build:non-react-compiled-version:dev:watch\" \"serve\"",
     "build": "webpack --mode production"
   },
   "devDependencies": {

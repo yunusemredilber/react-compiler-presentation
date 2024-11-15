@@ -8,7 +8,6 @@ export const Form = () => {
 
   return (
     <div>
-      Hi from React!
       <Input value={name.value} onChange={(event) => updateField('name', { value: event.currentTarget.value })} id="name" label="Name" hint="Please provide your first name"/>
       <Input value={surname.value} onChange={(event) => updateField('surname', { value: event.currentTarget.value })} id="surname" label="Surname" hint="Please provide your surname"/>
       <Select label="City" options={CITY_LIST} value={city.value} onChange={(value) => updateField('city', { value })} />
