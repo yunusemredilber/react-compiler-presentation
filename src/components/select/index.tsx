@@ -1,3 +1,6 @@
+import { ChangeEvent } from "react";
+import { increaseRenderCount } from "../../util/render-stats-data";
+
 interface Option {
   value: string;
   label: string;
@@ -20,12 +23,16 @@ export const Select = ({
   placeholder = "Select an option",
   disabled = false,
 }: SelectProps) => {
-  const handleChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
+  const handleChange = (event: ChangeEvent<HTMLSelectElement>) => {
     onChange(event.target.value);
   };
 
   return (
     <div className="select-wrapper">
+      {(() => {
+        increaseRenderCount('city-select');
+        return null;
+      })()}
       <label htmlFor="select" className="select-label">
         {label}
       </label>
@@ -43,11 +50,14 @@ export const Select = ({
         <option value="" disabled>
           {placeholder}
         </option>
-        {options.map((option) => (
-          <option key={option.value} value={option.value}>
-            {option.label}
-          </option>
-        ))}
+        {options.map((option) => {
+          increaseRenderCount('city-option');
+          return (
+            <option key={option.value} value={option.value}>
+              {option.label}
+            </option>
+          );
+        })}
       </select>
     </div>
   );

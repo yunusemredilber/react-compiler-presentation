@@ -1,4 +1,6 @@
-const path = require('path');
+import path from 'path';
+import { defineReactCompilerLoaderOption, reactCompilerLoader } from 'react-compiler-webpack';
+import { WebpackConfiguration } from "webpack-cli";
 
 module.exports = {
   entry: './src/index.tsx',
@@ -17,15 +19,19 @@ module.exports = {
         use: "ts-loader"
       },
       {
-        test: /\.(js|jsx)$/,
-        exclude: /node_modules\/.*/,
-        use: {
-          loader: "babel-loader",
-          options: {
-            presets: [["@babel/preset-env", { targets: "defaults" }]]
+        test: /\.[mc]?[jt]sx$/i,
+        exclude: /node_modules/,
+        use: [
+          {
+            loader: reactCompilerLoader,
+            options: defineReactCompilerLoaderOption({
+              // React Compiler options goes here
+              // compilationMode: 'annotation',
+            })
           }
-        }
-      },
+        ]
+      }
     ]
   },
-};
+  devtool: 'inline-source-map',
+} satisfies WebpackConfiguration;
