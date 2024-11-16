@@ -1,16 +1,14 @@
-import { ADDRESS_SUGGESTIONS } from "../../data/location";
 import { useForm } from "../../contexts/form";
 import { increaseRenderCount } from "../../util/render-stats-data";
-import { getMatchingTextPartsAsMarked } from "./helpers";
+import {
+  getFilteredSuggestions,
+  getMatchingTextPartsAsMarked,
+} from "./helpers";
 
 export const AddressSuggestions = () => {
   const { city, address, updateField } = useForm();
 
-  const filteredSuggestions = city.value
-    ? ADDRESS_SUGGESTIONS.filter(
-        (suggestion) => suggestion.cityId === city.value,
-      )
-    : ADDRESS_SUGGESTIONS;
+  const filteredSuggestions = getFilteredSuggestions(city.value);
 
   return (
     <div className="address-suggestions-wrapper">
@@ -27,9 +25,9 @@ export const AddressSuggestions = () => {
             <li
               key={suggestion.address}
               onClick={() => {
-                updateField("city", { value: suggestion.cityId as any });
+                updateField("city", { value: suggestion.cityId });
                 updateField("district", {
-                  value: suggestion.districtId as any,
+                  value: suggestion.districtId,
                 });
                 updateField("address", { value: suggestion.address });
               }}

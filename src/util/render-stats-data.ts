@@ -1,6 +1,7 @@
 export const renderStatsData = {
-  "select-option": 0,
   "get-district-list": 0,
+  "get-filtered-suggestions": 0,
+  "select-option": 0,
   "suggestion-element": 0,
 };
 

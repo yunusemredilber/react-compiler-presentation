@@ -1,4 +1,6 @@
 import { ReactElement } from "react";
+import { increaseRenderCount } from "../../util/render-stats-data";
+import { ADDRESS_SUGGESTIONS } from "../../data/location";
 
 export const getMatchingTextPartsAsMarked = (
   text: string,
@@ -11,3 +13,15 @@ export const getMatchingTextPartsAsMarked = (
     regex.test(part) ? <mark key={index}>{part}</mark> : part,
   );
 };
+
+export function getFilteredSuggestions(cityId?: number | null) {
+  increaseRenderCount("get-filtered-suggestions");
+
+  if (!cityId) {
+    return ADDRESS_SUGGESTIONS;
+  }
+
+  return ADDRESS_SUGGESTIONS.filter(
+    (suggestion) => suggestion.cityId === cityId,
+  );
+}
