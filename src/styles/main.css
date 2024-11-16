@@ -27,7 +27,7 @@ main {
   justify-content: center;
 }
 
-@media (max-width: 450px) {
+@media (max-width: 555px) {
   .render-stats {
     position: fixed;
     bottom: 25px;

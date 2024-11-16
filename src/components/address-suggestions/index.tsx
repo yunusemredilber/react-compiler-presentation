@@ -3,7 +3,7 @@ import { useForm } from "../../contexts/form";
 import { increaseRenderCount } from "../../util/render-stats-data";
 
 export const AddressSuggestions = () => {
-  const { city, updateField } = useForm();
+  const { city, address, updateField } = useForm();
 
   const filteredSuggestions = city.value ? ADDRESS_SUGGESTIONS.filter(suggestion => suggestion.cityId === city.value) : ADDRESS_SUGGESTIONS;
 
@@ -16,11 +16,16 @@ export const AddressSuggestions = () => {
             increaseRenderCount('suggestion-element');
             return null;
           })()}
+          const regex = new RegExp(`(${address.value || 'no-match'})`, "i");
+          const parts = suggestion.address.split(regex);
+
           return <li key={suggestion.address} onClick={() => {
             updateField('city', { value: suggestion.cityId as any });
             updateField('district', { value: suggestion.districtId as any });
             updateField('address', { value: suggestion.address });
-          }}>{suggestion.address}</li>;
+          }}>{parts.map((part, index) =>
+            regex.test(part) ? <mark key={index}>{part}</mark> : part
+          )}</li>;
         })}
       </ul>
     </div>
