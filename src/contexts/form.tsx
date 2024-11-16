@@ -35,7 +35,6 @@ function FormProvider({ children }: FromProviderProps) {
   });
 
   const updateField = <K extends keyof FormFields>(field: K, value: Partial<FormFields[K]>) => {
-    console.log('field', field, value);
     setData(prevData => ({
       ...prevData,
       [field]: {
