@@ -6,6 +6,8 @@ interface FormFields {
   name: InputState;
   surname: InputState;
   city: SelectState;
+  district: SelectState;
+  address: InputState;
 }
 
 export type FormContext = FormFields & {
@@ -28,12 +30,17 @@ function FormProvider({ children }: FromProviderProps) {
     name: createDefaultInputState(),
     surname: createDefaultInputState(),
     city: createDefaultSelectState(),
+    district: createDefaultSelectState(),
+    address: createDefaultInputState(),
   });
 
   const updateField = <K extends keyof FormFields>(field: K, value: Partial<FormFields[K]>) => {
     setData({
       ...data,
-      [field]: value,
+      [field]: {
+        ...data[field],
+        ...value,
+      },
     });
   };
 

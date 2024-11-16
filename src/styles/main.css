@@ -5,16 +5,61 @@ body {
   font-style: normal;
   font-variation-settings:
   "wdth" 100;
+  background-color: #efefef;
 }
 
 main {
+  display: flex;
+  justify-content: center;
+  min-height: 100vh;
+  align-items: center;
+}
+
+.app-container {
   padding: 20px;
+  max-width: 375px;
+}
+
+.render-stats {
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+@media (max-width: 450px) {
+  .render-stats {
+    position: fixed;
+    bottom: 25px;
+    right: 0;
+    padding: 5px;
+    z-index: 2;
+    background-color: rgba(200, 250, 200, .7);
+  }
+}
+
+.render-stats ul {
+  all: unset;
+}
+
+.render-stats li {
+  all: unset;
+  display: grid;
+  grid-template-columns: 3fr 1fr;
+  gap: 10px;
 }
 
 footer {
-  position: absolute;
-  inset-inline-start: 0;
+  position: fixed;
   inset-block-end: 0;
+  inset-inline-start: 50%;
+  transform: translateX(-50%);
+  background-color: floralwhite;
+  width: 100%;
+  text-align: center;
+  border: 1px dashed #333;
+  border-block-end: none;
+  max-width: 580px;
 }
 
 h1 {
@@ -36,4 +81,29 @@ h1 {
 .hint {
   font-size: 0.8em;
   color: #666;
+}
+
+.address-suggestions-wrapper {
+  overflow: scroll;
+}
+
+.address-suggestions-wrapper ul {
+  all: unset;
+  list-style-type: none;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px;
+  width: 1000px;
+  height: 200px;
+}
+
+.address-suggestions-wrapper li {
+  all: unset;
+  display: inline;
+  font-size: 0.9em;
+  word-break: break-word;
+  padding: 2px;
+  border: 1px solid #333;
+  border-radius: 4px;
+  background-color: white;
 }

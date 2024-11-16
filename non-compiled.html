@@ -8,17 +8,23 @@
     <link href="https://fonts.googleapis.com/css2?family=Sour+Gummy:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="/src/styles/reset.css" />
     <link rel="stylesheet" href="/src/styles/main.css" />
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+          integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY="
+          crossorigin=""/>
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Address Form App</title>
   </head>
   <body>
     <main>
-      <h1>Address Form - 🐌 Standard</h1>
+      <div class="app-container">
+        <h1>Address Form - 🐌 Standard</h1>
+        <div id="app"></div>
+      </div>
       <div id="render-stats" class="render-stats">
+        <h1>Render Stats</h1>
         <ul>
         </ul>
       </div>
-      <div id="app"></div>
     </main>
     <footer>
       Go to the <a href="/compiled">compiled version</a>.

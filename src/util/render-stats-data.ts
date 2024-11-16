@@ -1,6 +1,8 @@
 export const renderStatsData = {
-  'city-select': 0,
-  'city-option': 0,
+  'select': 0,
+  'select-option': 0,
+  'map-container': 0,
+  'suggestion-element': 0,
 };
 
 const renderStatsEl = document.querySelector('#render-stats > ul')!;
@@ -13,10 +15,10 @@ export const increaseRenderCount = (key: keyof typeof renderStatsData): void => 
   if (!keyEl) {
     const newEl = document.createElement('li');
     newEl.classList.add(key);
-    newEl.textContent = `${key}: ${renderStatsData[key]}`;
+    newEl.innerHTML = `<p class="key">${key}</p> <p class="value">${renderStatsData[key]}</p>`;
     renderStatsEl.appendChild(newEl);
     return;
   }
 
-  renderStatsEl.querySelector(`li.${key}`)!.textContent = `${key}: ${renderStatsData[key]}`;
+  renderStatsEl.querySelector(`li.${key} > .value`)!.textContent = renderStatsData[key].toString();
 }

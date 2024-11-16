@@ -2,7 +2,7 @@ import { ChangeEvent } from "react";
 import { increaseRenderCount } from "../../util/render-stats-data";
 
 interface Option {
-  value: string;
+  value: string | number;
   label: string;
 }
 
@@ -30,7 +30,7 @@ export const Select = ({
   return (
     <div className="select-wrapper">
       {(() => {
-        increaseRenderCount('city-select');
+        increaseRenderCount('select');
         return null;
       })()}
       <label htmlFor="select" className="select-label">
@@ -51,7 +51,7 @@ export const Select = ({
           {placeholder}
         </option>
         {options.map((option) => {
-          increaseRenderCount('city-option');
+          increaseRenderCount('select-option');
           return (
             <option key={option.value} value={option.value}>
               {option.label}
