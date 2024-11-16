@@ -1,7 +1,5 @@
 export const renderStatsData = {
-  'select': 0,
   'select-option': 0,
-  'map-container': 0,
   'suggestion-element': 0,
 };
 

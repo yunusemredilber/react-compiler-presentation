@@ -31,10 +31,6 @@ export const Select = ({
 
   return (
     <div className="select-wrapper">
-      {(() => {
-        increaseRenderCount('select');
-        return null;
-      })()}
       <label htmlFor="select" className="select-label">
         {label}
       </label>
