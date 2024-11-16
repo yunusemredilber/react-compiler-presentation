@@ -17,9 +17,9 @@ export const Form = () => {
         }
         id="name"
         label="Name"
-        hint="Please provide your first name"
+        hint="Please only provide your legal name without surname"
       />
-      <Input value={surname.value} onChange={(event) => updateField('surname', { value: event.currentTarget.value })} id="surname" label="Surname" hint="Please provide your surname"/>
+      <Input value={surname.value} onChange={(event) => updateField('surname', { value: event.currentTarget.value })} id="surname" label="Surname" />
       <Select label="City" options={CITY_LIST} value={city.value} onChange={(value) => updateField('city', { value })} />
       <Select label="District" options={filteredDistrictList} value={district.value} onChange={(value) => updateField('district', { value })} />
       <Input

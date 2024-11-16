@@ -92,6 +92,7 @@ h1 {
   list-style-type: none;
   display: flex;
   flex-wrap: wrap;
+  align-content: flex-start;
   gap: 4px;
   width: 1000px;
   height: 200px;
@@ -106,4 +107,5 @@ h1 {
   border: 1px solid #333;
   border-radius: 4px;
   background-color: white;
+  height: fit-content;
 }

@@ -3,13 +3,15 @@ import { useForm } from "../../contexts/form";
 import { increaseRenderCount } from "../../util/render-stats-data";
 
 export const AddressSuggestions = () => {
-  const { updateField } = useForm();
+  const { city, updateField } = useForm();
+
+  const filteredSuggestions = city.value ? ADDRESS_SUGGESTIONS.filter(suggestion => suggestion.cityId.toString() === city.value) : ADDRESS_SUGGESTIONS;
 
   return (
     <div className="address-suggestions-wrapper">
       <h4>Auto Complete Suggestions</h4>
-      <ul>
-        {ADDRESS_SUGGESTIONS.map((suggestion) => {
+      <ul style={{ width: filteredSuggestions.length < 10 ? 300 : 1000 }}>
+        {filteredSuggestions.map((suggestion) => {
           {(() => {
             increaseRenderCount('suggestion-element');
             return null;

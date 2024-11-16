@@ -10,8 +10,8 @@ export const Input = ({ label, hint, ...inputProps }: InputProps) => {
   return (
     <div className="input-wrapper">
       <label htmlFor={inputProps.id}>{label}</label>
-      <input {...inputProps} aria-describedby={`${inputProps.id}-hint`} />
-      <span id={`${inputProps.id}-hint`} className="hint">{hint}</span>
+      <input {...inputProps} autoComplete={inputProps.autoComplete || 'none'} aria-describedby={`${inputProps.id}-hint`} />
+      {hint && <span id={`${inputProps.id}-hint`} className="hint">{hint}</span>}
     </div>
   );
 }
