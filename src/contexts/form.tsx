@@ -5,8 +5,8 @@ import {createDefaultInputState, createDefaultSelectState} from "../util/form";
 interface FormFields {
   name: InputState;
   surname: InputState;
-  city: SelectState;
-  district: SelectState;
+  city: SelectState<number | null>;
+  district: SelectState<number | null>;
   address: InputState;
 }
 
@@ -29,19 +29,20 @@ function FormProvider({ children }: FromProviderProps) {
   const [data, setData] = useState<FormFields>({
     name: createDefaultInputState(),
     surname: createDefaultInputState(),
-    city: createDefaultSelectState(),
-    district: createDefaultSelectState(),
+    city: createDefaultSelectState<number | null>(null),
+    district: createDefaultSelectState<number | null>(null),
     address: createDefaultInputState(),
   });
 
   const updateField = <K extends keyof FormFields>(field: K, value: Partial<FormFields[K]>) => {
-    setData({
-      ...data,
+    console.log('field', field, value);
+    setData(prevData => ({
+      ...prevData,
       [field]: {
-        ...data[field],
+        ...prevData[field],
         ...value,
       },
-    });
+    }));
   };
 
   return (

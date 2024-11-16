@@ -7,15 +7,17 @@ interface Option {
 }
 
 interface SelectProps {
+  id: string;
   label: string;
   options: Option[];
-  value: string;
+  value: string | number | null;
   onChange: (value: string) => void;
   placeholder?: string;
   disabled?: boolean;
 }
 
 export const Select = ({
+  id,
   label,
   options,
   value,
@@ -37,8 +39,8 @@ export const Select = ({
         {label}
       </label>
       <select
-        id="select"
-        value={value}
+        id={id}
+        value={value || ''}
         onChange={handleChange}
         disabled={disabled}
         aria-label={label}

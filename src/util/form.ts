@@ -7,8 +7,8 @@ export const createDefaultInputState = (): InputState => ({
   errorMessage: undefined,
 });
 
-export const createDefaultSelectState = (): SelectState => ({
-  value: '',
+export const createDefaultSelectState = <ValueType>(defaultValue: ValueType): SelectState<ValueType> => ({
+  value: defaultValue,
   hasError: false,
   errorMessage: undefined,
 });

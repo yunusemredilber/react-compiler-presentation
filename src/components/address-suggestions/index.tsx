@@ -5,7 +5,7 @@ import { increaseRenderCount } from "../../util/render-stats-data";
 export const AddressSuggestions = () => {
   const { city, updateField } = useForm();
 
-  const filteredSuggestions = city.value ? ADDRESS_SUGGESTIONS.filter(suggestion => suggestion.cityId.toString() === city.value) : ADDRESS_SUGGESTIONS;
+  const filteredSuggestions = city.value ? ADDRESS_SUGGESTIONS.filter(suggestion => suggestion.cityId === city.value) : ADDRESS_SUGGESTIONS;
 
   return (
     <div className="address-suggestions-wrapper">
@@ -17,10 +17,8 @@ export const AddressSuggestions = () => {
             return null;
           })()}
           return <li key={suggestion.address} onClick={() => {
-            console.log('suggestion.cityId.toString()', suggestion.cityId.toString())
             updateField('city', { value: suggestion.cityId as any });
-            updateField('city', { value: '1' as any });
-            updateField('district', { value: suggestion.districtId.toString() });
+            updateField('district', { value: suggestion.districtId as any });
             updateField('address', { value: suggestion.address });
           }}>{suggestion.address}</li>;
         })}

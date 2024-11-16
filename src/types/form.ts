@@ -5,8 +5,8 @@ export interface InputState {
   errorMessage?: string;
 }
 
-export interface SelectState {
-  value: string;
+export interface SelectState<T> {
+  value: T;
   hasError: boolean;
   errorMessage?: string;
 }
