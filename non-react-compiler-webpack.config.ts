@@ -1,11 +1,11 @@
-import path from 'path';
+import path from "path";
 import { WebpackConfiguration } from "webpack-cli";
 
 module.exports = {
-  entry: './src/index.tsx',
+  entry: "./src/index.tsx",
   output: {
-    filename: 'non-compiled-app.bundle.js',
-    path: path.resolve(__dirname, 'dist'),
+    filename: "non-compiled-app.bundle.js",
+    path: path.resolve(__dirname, "dist"),
   },
   resolve: {
     extensions: [".ts", ".tsx", ".js", ".jsx", ".json"],
@@ -15,7 +15,7 @@ module.exports = {
       {
         test: /\.ts(x?)$/,
         exclude: /node_modules/,
-        use: "ts-loader"
+        use: "ts-loader",
       },
       {
         test: /\.(js|jsx)$/,
@@ -23,11 +23,11 @@ module.exports = {
         use: {
           loader: "babel-loader",
           options: {
-            presets: [["@babel/preset-env", { targets: "defaults" }]]
-          }
-        }
+            presets: [["@babel/preset-env", { targets: "defaults" }]],
+          },
+        },
       },
-    ]
+    ],
   },
-  devtool: 'inline-source-map',
+  devtool: "inline-source-map",
 } satisfies WebpackConfiguration;

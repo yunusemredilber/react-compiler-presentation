@@ -1,12 +1,15 @@
-import path from 'path';
-import { defineReactCompilerLoaderOption, reactCompilerLoader } from 'react-compiler-webpack';
+import path from "path";
+import {
+  defineReactCompilerLoaderOption,
+  reactCompilerLoader,
+} from "react-compiler-webpack";
 import { WebpackConfiguration } from "webpack-cli";
 
 module.exports = {
-  entry: './src/index.tsx',
+  entry: "./src/index.tsx",
   output: {
-    filename: 'compiled-app.bundle.js',
-    path: path.resolve(__dirname, 'dist'),
+    filename: "compiled-app.bundle.js",
+    path: path.resolve(__dirname, "dist"),
   },
   resolve: {
     extensions: [".ts", ".tsx", ".js", ".jsx", ".json"],
@@ -16,7 +19,7 @@ module.exports = {
       {
         test: /\.ts(x?)$/,
         exclude: /node_modules/,
-        use: "ts-loader"
+        use: "ts-loader",
       },
       {
         test: /\.[mc]?[jt]sx$/i,
@@ -27,11 +30,11 @@ module.exports = {
             options: defineReactCompilerLoaderOption({
               // React Compiler options goes here
               // compilationMode: 'annotation',
-            })
-          }
-        ]
-      }
-    ]
+            }),
+          },
+        ],
+      },
+    ],
   },
-  devtool: 'inline-source-map',
+  devtool: "inline-source-map",
 } satisfies WebpackConfiguration;

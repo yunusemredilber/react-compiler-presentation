@@ -3,8 +3,7 @@ body {
   font-optical-sizing: auto;
   font-weight: 400;
   font-style: normal;
-  font-variation-settings:
-  "wdth" 100;
+  font-variation-settings: "wdth" 100;
   background-color: #efefef;
 }
 
@@ -34,7 +33,7 @@ main {
     right: 0;
     padding: 5px;
     z-index: 2;
-    background-color: rgba(200, 250, 200, .7);
+    background-color: rgba(200, 250, 200, 0.7);
   }
 }
 

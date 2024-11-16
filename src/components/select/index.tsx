@@ -36,7 +36,7 @@ export const Select = ({
       </label>
       <select
         id={id}
-        value={value || ''}
+        value={value || ""}
         onChange={handleChange}
         disabled={disabled}
         aria-label={label}
@@ -49,7 +49,7 @@ export const Select = ({
           {placeholder}
         </option>
         {options.map((option) => {
-          increaseRenderCount('select-option');
+          increaseRenderCount("select-option");
           return (
             <option key={option.value} value={option.value}>
               {option.label}

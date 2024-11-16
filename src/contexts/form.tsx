@@ -1,6 +1,9 @@
-import React, { createContext, useContext, useState } from 'react';
+import React, { createContext, useContext, useState } from "react";
 import { InputState, SelectState } from "../types/form";
-import {createDefaultInputState, createDefaultSelectState} from "../util/form";
+import {
+  createDefaultInputState,
+  createDefaultSelectState,
+} from "../util/form";
 
 interface FormFields {
   name: InputState;
@@ -11,11 +14,13 @@ interface FormFields {
 }
 
 export type FormContext = FormFields & {
-  updateField: <K extends keyof FormFields>(field: K, value: Partial<FormFields[K]>) => void;
+  updateField: <K extends keyof FormFields>(
+    field: K,
+    value: Partial<FormFields[K]>,
+  ) => void;
 };
 
-const defaultFormContext = {
-} as any;
+const defaultFormContext = {} as any;
 
 const FormContext = createContext(defaultFormContext);
 
@@ -34,8 +39,11 @@ function FormProvider({ children }: FromProviderProps) {
     address: createDefaultInputState(),
   });
 
-  const updateField = <K extends keyof FormFields>(field: K, value: Partial<FormFields[K]>) => {
-    setData(prevData => ({
+  const updateField = <K extends keyof FormFields>(
+    field: K,
+    value: Partial<FormFields[K]>,
+  ) => {
+    setData((prevData) => ({
       ...prevData,
       [field]: {
         ...prevData[field],

@@ -9,7 +9,8 @@
     "build:non-react-compiled-version:dev": "webpack --mode development --config ./non-react-compiler-webpack.config.ts",
     "build:non-react-compiled-version:dev:watch": "yarn build:non-react-compiled-version:dev --watch",
     "dev": "concurrently \"yarn build:dev:watch\" \"yarn build:non-react-compiled-version:dev:watch\" \"serve\"",
-    "build": "webpack --mode production"
+    "build": "webpack --mode production",
+    "prettier": "prettier --write ."
   },
   "devDependencies": {
     "@babel/core": "^7.26.0",
@@ -21,6 +22,7 @@
     "@types/react-dom": "^18.3.1",
     "babel-plugin-react-compiler": "^19.0.0-beta-a7bf2bd-20241110",
     "concurrently": "^9.1.0",
+    "prettier": "3.3.3",
     "react-compiler-webpack": "^0.1.2",
     "serve": "^14.2.4",
     "ts-loader": "^9.5.1",
