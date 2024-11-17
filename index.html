@@ -295,11 +295,11 @@ module.exports = {
           <iframe data-src="/react-compiler-presentation/compiled" data-preload width="700" height="600"></iframe>
         </section>
         <section>
-            <h3>🤯 What did the compiler do?</h3>
-            <img src="/react-compiler-presentation/public/react-dev-tools-change-example.png" alt="React Dev Tools Change Example">
+          <h3>🤯 What did the compiler do?</h3>
+          <img src="/react-compiler-presentation/public/react-dev-tools-change-example.png" alt="React Dev Tools Change Example">
         </section>
         <section>
-          <h2>Let's Go Back to Our Select Component</h2>
+          <h3>Let's Go Back to Our Select Component</h3>
           <small>More simplified for easier tracking</small>
           <pre>
             <code class="language-typescript" data-line-numbers="1-18|11-15">
@@ -324,7 +324,7 @@ export const Select = ({
           </pre>
         </section>
         <section>
-          <h2>Webpack Bundle Output</h2>
+          <h3>Standard Webpack Output</h3>
           <small>Without compiler integration</small>
           <pre>
             <code class="language-typescript" data-line-numbers="2|4-20">
@@ -351,8 +351,7 @@ export const Select = ({ id, options, value, onChange, }) =&gt; {
           </pre>
         </section>
         <section>
-          <h2>Webpack Bundle Output</h2>
-          <small>With compiler integration</small>
+          <h3>Webpack + React Compiler Output</h3>
           <pre>
             <code class="language-typescript" data-line-numbers="33-35|3|5-6|9-17|18-29|30">
 import { jsx as _jsx } from &quot;react/jsx-runtime&quot;;
