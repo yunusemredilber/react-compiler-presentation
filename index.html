@@ -1,0 +1,419 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <link
+      rel="icon"
+      type="image/svg+xml"
+      href="https://i.pinimg.com/564x/be/6e/30/be6e30b5f785278644c4e4e019cde02d.jpg"
+    />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>React Compiler: Presentation</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/5.1.0/reveal.min.css" integrity="sha512-0AUO8B5ll9y1ERV/55xq3HeccBGnvAJQsVGitNac/iQCLyDTGLUBMPqlupIWp/rJg0hV3WWHusXchEIdqFAv1Q==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/5.1.0/theme/white.min.css" integrity="sha512-NJYOiL4HPnu7QvvGcvHAnVVz2X6qWcTDAH4x3fmUOW/SGUbK46IbzHhQ1KoKDfK2trs5RwUu03Ax9sxjqz1iQw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/5.1.0/plugin/highlight/zenburn.min.css" integrity="sha512-JPxjD2t82edI35nXydY/erE9jVPpqxEJ++6nYEoZEpX2TRsmp2FpZuQqZa+wBCen5U16QZOkMadGXHCfp+tUdg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="/public/presentation-styles.css" />
+  </head>
+  <body>
+    <div class="reveal">
+      <div class="slides">
+        <section>
+          <div class="side-by-side">
+            <img src="public/react_uwu_logo.png" height="165" alt="react logo">
+            <h1>Compiler</h1>
+          </div>
+          <p>The near future of how we will use React</p>
+        </section>
+        <section data-markdown>
+          <textarea data-template>
+            ## Let's Start with the Basics
+            We will create a simple address form app
+          </textarea>
+        </section>
+        <section>
+          <section>
+            <h2>What we have (1)</h2>
+            <p>A global context named FormContext</p>
+            <pre>
+              <code class="language-typescript">
+const FormContext = createContext(defaultFormContext);
+
+const useForm = () =&gt; useContext(FormContext);
+
+function FormProvider({ children }) {
+  const [data, setData] = useState&lt;FormFields&gt;({
+    name: createDefaultInputState(),
+    // ...
+  });
+
+  const updateField = &lt;K&gt;(field: K, value: Partial&lt;FormFields[K]&gt;) =&gt; {
+    setData(prevData =&gt; ({
+      ...prevData,
+      [field]: {
+        ...prevData[field],
+        ...value,
+      },
+    }));
+  };
+
+  return (
+    &lt;FormContext.Provider
+      value={{
+        ...data,
+        updateField,
+      }}
+    &gt;
+      {children}
+    &lt;/FormContext.Provider&gt;
+  );
+}
+              </code>
+            </pre>
+          </section>
+          <section>
+            <h2>What we have (2)</h2>
+            <p>A few controlled form components like this:</p>
+            <pre>
+              <code class="language-typescript" data-line-numbers="1-26|14|16-20">
+const Select = ({
+  id, label, options, value, onChange,
+}) =&gt; {
+  const handleChange = (event) =&gt; {
+    onChange(event.target.value);
+  };
+
+  return (
+    &lt;div className=&quot;select-wrapper&quot;&gt;
+      &lt;label htmlFor=&quot;select&quot; className=&quot;select-label&quot;&gt;
+        {label}
+      &lt;/label&gt;
+      &lt;select id={id} value={value || ''} onChange={handleChange}&gt;
+        {options.map((option) =&gt; {
+          increaseRenderCount('select-option');
+          return (
+            &lt;option key={option.value} value={option.value}&gt;
+              {option.label}
+            &lt;/option&gt;
+          );
+        })}
+      &lt;/select&gt;
+    &lt;/div&gt;
+  );
+};
+              </code>
+            </pre>
+          </section>
+          <section>
+            <h2>What we have (3)</h2>
+            <p>A form component</p>
+            <pre>
+              <code class="language-typescript" data-line-numbers="1-26|5-6|10-15|17-21">
+const Form = () =&gt; {
+  const { name, surname, city, district, address, updateField } = useForm();
+
+  // We will keep track of this fn calls just in case:
+  const filteredDistrictList = getDistrictList(city.value);
+
+  return (
+    &lt;div&gt;
+      &lt;Input
+        value={name.value}
+        onChange={(event) =&gt;
+          updateField('name', { value: event.currentTarget.value })
+        }
+      /&gt;
+      &lt;Input id=&quot;surname&quot; {/* ... */} /&gt;
+      &lt;Select
+        options={CITY_LIST}
+        value={city.value}
+        onChange={(value) =&gt; updateField('city', { value: Number(value) })}
+      /&gt;
+      &lt;Select options={filteredDistrictList} {/* ... */} /&gt;
+      &lt;Input id=&quot;address&quot; {/* ... */} /&gt;
+    &lt;/div&gt;
+  );
+}
+              </code>
+            </pre>
+          </section>
+          <section>
+            <h2>What we have (4)</h2>
+            <p>One More: Address Suggestion Chips</p>
+            <pre>
+              <code class="language-typescript" data-line-numbers="1-26|5-6|12-16|18-27">
+const AddressSuggestions = () =&gt; {
+  const { city, address, updateField } = useForm();
+
+  // We will track this one as well:
+  const filteredSuggestions = getFilteredSuggestions(city.value);
+
+  return (
+    &lt;div className=&quot;address-suggestions-wrapper&quot;&gt;
+      &lt;h4&gt;Auto Complete Suggestions&lt;/h4&gt;
+      &lt;ul style={{ width: filteredSuggestions.length &lt; 10 ? 300 : 1000 }}&gt;
+        {filteredSuggestions.map((suggestion) =&gt; {
+          {(() =&gt; {
+            increaseRenderCount(&quot;suggestion-element&quot;);
+            return null;
+          })()}
+          return (
+            &lt;li
+              key={suggestion.address}
+              onClick={() =&gt; {
+                autoFillAddressFromSuggestion({
+                  suggestion, updateField,
+                });
+              }}
+            &gt;
+              {getMatchingTextPartsAsMarked(suggestion.address, address.value)}
+            &lt;/li&gt;
+          );
+        })}
+      &lt;/ul&gt;
+    &lt;/div&gt;
+  );
+};
+              </code>
+            </pre>
+          </section>
+        </section>
+        <section>
+          <div class="side-by-side text-align-start">
+            <iframe data-src="http://localhost:3000/non-compiled" data-preload width="700" height="600"></iframe>
+            <div class="fragment margin-inline-start" style="max-width: 300px;">
+              <h5>Issues</h5>
+              <ul class="small-list">
+                <li>1. State change causes most elements to re-render.</li>
+                <li>2. Select elements are expensive to re-render due to their option elements.</li>
+                <li>3. Auto complete suggestions are expensive to re-render.</li>
+                <li>4. There are some filtering functions that are re-rendering unnecessarily often.</li>
+              </ul>
+            </div>
+          </div>
+        </section>
+        <section data-markdown>
+          <textarea data-template>
+            ## There are lots of solutions
+            But what if we could solve all these issues effortlessly?
+          </textarea>
+        </section>
+        <section data-markdown>
+          <textarea data-template>
+            ## React Compiler
+            A build-time tool that automatically optimizes your React app.
+            ---
+            ## Prerequisites
+            - Following the [Rules of React](https://react.dev/reference/rules).
+            - Best optimized for React 19 RC.
+            - Compatible with React 17+ with [additional configuration](https://react.dev/learn/react-compiler#using-react-compiler-with-react-17-or-18).
+          </textarea>
+        </section>
+        <section data-markdown>
+          <textarea data-template>
+            ## Using the React Compiler with ESLint Plugin
+            - React Compiler powers an ESLint plugin.
+            - It displays any violations of React rules in your editor.
+            - It can be used *independently*.
+          </textarea>
+        </section>
+        <section>
+          <p class="small-text">When the rule does not pass, it means that the compiler has skipped over optimizing that component or hook.</p>
+          <pre>
+            <code class="language-typescript" data-line-numbers="2|7,10">
+import reactCompiler from 'eslint-plugin-react-compiler'
+
+export default [
+  {
+    plugins: {
+      'react-compiler': reactCompiler,
+    },
+    rules: {
+      'react-compiler/react-compiler': 'warn',
+    },
+  },
+];
+            </code>
+          </pre>
+        </section>
+        <section>
+          <p>Example compiler lint issue:</p>
+          <img src="public/react-compiler-eslint-example.png" alt="React Compiler Eslint Example">
+        </section>
+        <section>
+          <strong>Running healthcheck script</strong>
+          <img src="public/react-compiler-healthcheck-example.png" width="700" alt="React Compiler Healthcheck Example">
+        </section>
+        <section>
+          <p>We will integrate the React Compiler with Babel.</p>
+          <small>The React Compiler supports most build tools.</small>
+          <pre>
+            <code class="language-typescript" data-line-numbers="11-21|2-5|22-35">
+import {
+  defineReactCompilerLoaderOption,
+  reactCompilerLoader,
+} from &quot;react-compiler-webpack&quot;;
+
+module.exports = {
+  // ...
+  module: {
+    rules: [
+      // Current:
+      {
+        test: /\.(js|jsx)$/,
+        exclude: /node_modules\/.*/,
+        use: {
+          loader: &quot;babel-loader&quot;,
+          options: {
+            presets: [[&quot;@babel/preset-env&quot;, { targets: &quot;defaults&quot; }]],
+          },
+        },
+      },
+      // New:
+      {
+        test: /\.[mc]?[jt]sx$/i,
+        exclude: /node_modules/,
+        use: [
+          {
+            loader: reactCompilerLoader,
+            options: defineReactCompilerLoaderOption({
+              // React Compiler options goes here
+              // compilationMode: 'annotation',
+            }),
+          },
+        ],
+      },
+    ],
+  },
+} satisfies WebpackConfiguration;
+            </code>
+          </pre>
+        </section>
+        <section>
+          <h1>That's it ? 🤔</h1>
+        </section>
+        <section>
+          <iframe data-src="http://localhost:3000/compiled" data-preload width="700" height="600"></iframe>
+        </section>
+        <section>
+            <h3>🤯 What did the compiler do?</h3>
+            <img src="public/react-dev-tools-change-example.png" alt="React Dev Tools Change Example">
+        </section>
+        <section>
+          <h2>Let's Go Back to Our Select Component</h2>
+          <small>More simplified for easier tracking</small>
+          <pre>
+            <code class="language-typescript" data-line-numbers="1-18|11-15">
+export const Select = ({
+  id, options, value, onChange,
+}: SelectProps) =&gt; {
+  return (
+    &lt;select
+      id={id}
+      value={value || &quot;&quot;}
+      onChange={onChange}
+    &gt;
+      {options.map((option) =&gt; (
+        &lt;option key={option.value} value={option.value}&gt;
+          {option.label}
+        &lt;/option&gt;
+      ))}
+    &lt;/select&gt;
+  );
+};
+            </code>
+          </pre>
+        </section>
+        <section>
+          <h2>Webpack Bundle Output</h2>
+          <small>Without compiler integration</small>
+          <pre>
+            <code class="language-typescript" data-line-numbers="2|4-20">
+import { jsx as _jsx } from &quot;react/jsx-runtime&quot;;
+
+export const Select = ({ id, options, value, onChange, }) =&gt; {
+  return (
+    _jsx(&quot;select&quot;, {
+      id: id,
+      value: value || &quot;&quot;,
+      onChange: onChange,
+      children: options.map(
+        (option) =&gt; (
+          _jsx(&quot;option&quot;, {
+            value: option.value,
+            children: option.label
+          }, option.value)
+        )
+      )
+    })
+  );
+};
+            </code>
+          </pre>
+        </section>
+        <section>
+          <h2>Webpack Bundle Output</h2>
+          <small>With compiler integration</small>
+          <pre>
+            <code class="language-typescript" data-line-numbers="33-35|3|5-6|9-17|18-29|30">
+import { jsx as _jsx } from &quot;react/jsx-runtime&quot;;
+import { c as _c } from &quot;react/compiler-runtime&quot;;
+
+export const Select = t0 =&gt; {
+    const $ = _c(7);
+    const { id, options, value, onChange } = t0;
+    const t1 = value || &quot;&quot;;
+    let t2;
+    if ($[0] !== options) {
+        t2 = options.map(_temp);
+        $[0] = options;
+        $[1] = t2;
+    }
+    else {
+        t2 = $[1];
+    }
+    let t3;
+    if ($[2] !== id || $[3] !== onChange || $[4] !== t1 || $[5] !== t2) {
+        t3 = _jsx(&quot;select&quot;, { id: id, value: t1, onChange: onChange, children: t2 });
+        $[2] = id;
+        $[3] = onChange;
+        $[4] = t1;
+        $[5] = t2;
+        $[6] = t3;
+    }
+    else {
+        t3 = $[6];
+    }
+    return t3;
+};
+
+function _temp(option) {
+    return _jsx(&quot;option&quot;, { value: option.value, children: option.label }, option.value);
+}
+            </code>
+          </pre>
+        </section>
+        <section data-markdown>
+          <textarea data-template>
+            ## Sources
+            - https://react.dev/learn/react-compiler
+            - https://playground.react.dev
+            - https://x.com/sebastienlorber/status/1760345044353970631
+          </textarea>
+        </section>
+      </div>
+    </div>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/5.1.0/reveal.min.js" integrity="sha512-sMRSj1Ns64C2OE6VNS7WrV63OHW7dLAvi96CXRoy9AEe/tKF+868fhUJpc5ZKS166lwhe2ArCYjFitLJUY+VWA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/5.1.0/plugin/markdown/markdown.min.js" integrity="sha512-4exkEeyVuaWUFKozXl6L3UCugl6ai1cKnrVFkWUstdrNB2sDxxmPEaHBzTlYm9wX78EjPzEBG0s8k37oPeUFIw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/5.1.0/plugin/highlight/highlight.min.js" integrity="sha512-xkVKkN0o7xECTHSUZ9zdsBYRXiAKH7CZ3aICpW6aQJZsufVVRLhEBTDjTpC1tPzm+gNZiOeW174zXAB2fOLsTg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script type="module">
+      const deck = new Reveal({
+        plugins: [RevealMarkdown, RevealHighlight],
+        slideNumber: true,
+        fragmentInURL: true,
+        history: true,
+      });
+
+      deck.initialize();
+    </script>
+  </body>
+</html>
