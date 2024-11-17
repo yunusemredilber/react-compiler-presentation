@@ -1,0 +1,49 @@
+name: Build and Push to Build Branch
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '20'
+
+      - name: Cache Yarn dependencies
+        uses: actions/cache@v3
+        id: yarn-cache
+        with:
+          path: |
+            ~/.yarn/cache
+            node_modules
+          key: yarn-cache-${{ runner.os }}-${{ hashFiles('yarn.lock') }}
+          restore-keys: |
+            yarn-cache-${{ runner.os }}-
+
+      - name: Install dependencies
+        run: yarn install
+        if: steps.yarn-cache.outputs.cache-hit != 'true'
+
+      - name: Build project
+        run: yarn build:all:prod
+
+      - name: Deploy to Build Branch
+        run: |
+          git config --global user.name "github-actions[bot]"
+          git config --global user.email "github-actions[bot]@users.noreply.github.com"
+          git checkout -B build
+          git add dist
+          git commit -m "Deploy build to build branch"
+          git push -f origin build
