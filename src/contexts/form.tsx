@@ -20,7 +20,7 @@ export type FormContext = FormFields & {
   ) => void;
 };
 
-const defaultFormContext = {} as any;
+const defaultFormContext = {} as FormContext;
 
 const FormContext = createContext(defaultFormContext);
 

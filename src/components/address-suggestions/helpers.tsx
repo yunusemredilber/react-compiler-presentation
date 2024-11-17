@@ -1,6 +1,7 @@
 import { ReactElement } from "react";
 import { increaseRenderCount } from "../../util/render-stats-data";
 import { ADDRESS_SUGGESTIONS } from "../../data/location";
+import { FormContext } from "../../contexts/form";
 
 export const getMatchingTextPartsAsMarked = (
   text: string,
@@ -30,8 +31,8 @@ export const autoFillAddressFromSuggestion = ({
   suggestion,
   updateField,
 }: {
-  suggestion: any;
-  updateField: any;
+  suggestion: (typeof ADDRESS_SUGGESTIONS)[number];
+  updateField: FormContext["updateField"];
 }) => {
   updateField("city", { value: suggestion.cityId });
   updateField("district", {
