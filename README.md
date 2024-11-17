@@ -1,5 +1,7 @@
 # React Compiler Presentation
 
+Presentation URL: [https://yunusemredilber.github.io/react-compiler-presentation](https://yunusemredilber.github.io/react-compiler-presentation/#/)
+
 The repo contains the presentation and demo apps for the React Compiler talk.
 
 ![React Compiler](./public/presentation-demo-page.png)
