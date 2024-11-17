@@ -1,6 +1,7 @@
 import { useForm } from "../../contexts/form";
 import { increaseRenderCount } from "../../util/render-stats-data";
 import {
+  autoFillAddressFromSuggestion,
   getFilteredSuggestions,
   getMatchingTextPartsAsMarked,
 } from "./helpers";
@@ -25,11 +26,10 @@ export const AddressSuggestions = () => {
             <li
               key={suggestion.address}
               onClick={() => {
-                updateField("city", { value: suggestion.cityId });
-                updateField("district", {
-                  value: suggestion.districtId,
+                autoFillAddressFromSuggestion({
+                  suggestion,
+                  updateField,
                 });
-                updateField("address", { value: suggestion.address });
               }}
             >
               {getMatchingTextPartsAsMarked(suggestion.address, address.value)}

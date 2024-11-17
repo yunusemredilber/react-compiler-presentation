@@ -25,3 +25,17 @@ export function getFilteredSuggestions(cityId?: number | null) {
     (suggestion) => suggestion.cityId === cityId,
   );
 }
+
+export const autoFillAddressFromSuggestion = ({
+  suggestion,
+  updateField,
+}: {
+  suggestion: any;
+  updateField: any;
+}) => {
+  updateField("city", { value: suggestion.cityId });
+  updateField("district", {
+    value: suggestion.districtId,
+  });
+  updateField("address", { value: suggestion.address });
+};
