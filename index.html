@@ -74,7 +74,7 @@ function FormProvider({ children }) {
             <h2>What we have (2)</h2>
             <p>A few controlled form components like this:</p>
             <pre>
-              <code class="language-typescript" data-line-numbers="1-26|14|16-20">
+              <code class="language-typescript" data-line-numbers="1-26|15-21">
 const Select = ({
   id, label, options, value, onChange,
 }) =&gt; {
@@ -136,50 +136,10 @@ const Form = () =&gt; {
               </code>
             </pre>
           </section>
-          <section>
-            <h2>What we have (4)</h2>
-            <p>One More: Address Suggestion Chips</p>
-            <pre>
-              <code class="language-typescript" data-line-numbers="1-26|5-6|12-16|18-27">
-const AddressSuggestions = () =&gt; {
-  const { city, address, updateField } = useForm();
-
-  // We will track this one as well:
-  const filteredSuggestions = getFilteredSuggestions(city.value);
-
-  return (
-    &lt;div className=&quot;address-suggestions-wrapper&quot;&gt;
-      &lt;h4&gt;Auto Complete Suggestions&lt;/h4&gt;
-      &lt;ul style={{ width: filteredSuggestions.length &lt; 10 ? 300 : 1000 }}&gt;
-        {filteredSuggestions.map((suggestion) =&gt; {
-          {(() =&gt; {
-            increaseRenderCount(&quot;suggestion-element&quot;);
-            return null;
-          })()}
-          return (
-            &lt;li
-              key={suggestion.address}
-              onClick={() =&gt; {
-                autoFillAddressFromSuggestion({
-                  suggestion, updateField,
-                });
-              }}
-            &gt;
-              {getMatchingTextPartsAsMarked(suggestion.address, address.value)}
-            &lt;/li&gt;
-          );
-        })}
-      &lt;/ul&gt;
-    &lt;/div&gt;
-  );
-};
-              </code>
-            </pre>
-          </section>
         </section>
         <section>
           <div class="side-by-side text-align-start">
-            <iframe data-src="/react-compiler-presentation/non-compiled" data-preload width="700" height="600"></iframe>
+            <iframe data-src="/react-compiler-presentation/non-compiled" data-preload width="700" height="500"></iframe>
             <div class="fragment margin-inline-start" style="max-width: 300px;">
               <h5>Issues</h5>
               <ul class="small-list">
@@ -293,7 +253,7 @@ module.exports = {
           <h1>That's it ? 🤔</h1>
         </section>
         <section>
-          <iframe data-src="/react-compiler-presentation/compiled" data-preload width="700" height="600"></iframe>
+          <iframe data-src="/react-compiler-presentation/compiled" data-preload width="700" height="500"></iframe>
         </section>
         <section>
           <h3>🤯 What did the compiler do?</h3>

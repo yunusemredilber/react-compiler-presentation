@@ -1,8 +1,6 @@
 export const renderStatsData = {
-  "get-district-list": 0,
-  "get-filtered-suggestions": 0,
+  "filter-district-list": 0,
   "select-option": 0,
-  "suggestion-element": 0,
 };
 
 const renderStatsEl = document.querySelector("#render-stats > ul")!;

@@ -81,30 +81,3 @@ h1 {
   font-size: 0.8em;
   color: #666;
 }
-
-.address-suggestions-wrapper {
-  overflow: scroll;
-}
-
-.address-suggestions-wrapper ul {
-  all: unset;
-  list-style-type: none;
-  display: flex;
-  flex-wrap: wrap;
-  align-content: flex-start;
-  gap: 4px;
-  width: 1000px;
-  height: 200px;
-}
-
-.address-suggestions-wrapper li {
-  all: unset;
-  display: inline;
-  font-size: 0.9em;
-  word-break: break-word;
-  padding: 2px;
-  border: 1px solid #333;
-  border-radius: 4px;
-  background-color: white;
-  height: fit-content;
-}
