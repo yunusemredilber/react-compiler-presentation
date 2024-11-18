@@ -144,9 +144,8 @@ const Form = () =&gt; {
               <h5>Issues</h5>
               <ul class="small-list">
                 <li>1. State change causes most elements to re-render.</li>
-                <li>2. Select elements are expensive to re-render due to their option elements.</li>
-                <li>3. Auto complete suggestions are expensive to re-render.</li>
-                <li>4. There are some filtering functions that are re-rendering unnecessarily often.</li>
+                <li>2. Frequently re-rendering select component is expensive.</li>
+                <li>3. Frequently calling district filter function is expensive.</li>
               </ul>
                 <img src="/react-compiler-presentation/public/react-rerender-meme.JPG">
             </div>
