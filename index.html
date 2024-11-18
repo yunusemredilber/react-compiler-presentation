@@ -188,6 +188,7 @@ const AddressSuggestions = () =&gt; {
                 <li>3. Auto complete suggestions are expensive to re-render.</li>
                 <li>4. There are some filtering functions that are re-rendering unnecessarily often.</li>
               </ul>
+                <img src="/react-compiler-presentation/public/react-rerender-meme.JPG">
             </div>
           </div>
         </section>
@@ -237,7 +238,7 @@ export default [
         </section>
         <section>
           <p>Example compiler lint issue:</p>
-          <img src="/react-compiler-presentation/public/react-compiler-eslint-example.png" alt="React Compiler Eslint Example">
+          <img class="r-stretch" src="/react-compiler-presentation/public/react-compiler-eslint-example.png" alt="React Compiler Eslint Example">
         </section>
         <section>
           <strong>Running healthcheck script</strong>
@@ -353,7 +354,7 @@ export const Select = ({ id, options, value, onChange, }) =&gt; {
         <section>
           <h3>Webpack + React Compiler Output</h3>
           <pre>
-            <code class="language-typescript" data-line-numbers="33-35|3|5-6|9-17|18-29|30">
+            <code class="language-typescript" data-line-numbers="33-36|3|5-6|10-18|19-29|30">
 import { jsx as _jsx } from &quot;react/jsx-runtime&quot;;
 import { c as _c } from &quot;react/compiler-runtime&quot;;
 
@@ -361,13 +362,14 @@ export const Select = t0 =&gt; {
     const $ = _c(7);
     const { id, options, value, onChange } = t0;
     const t1 = value || &quot;&quot;;
+
+    // Auto generated memoization (low level)
     let t2;
     if ($[0] !== options) {
         t2 = options.map(_temp);
         $[0] = options;
         $[1] = t2;
-    }
-    else {
+    } else {
         t2 = $[1];
     }
     let t3;
@@ -378,26 +380,62 @@ export const Select = t0 =&gt; {
         $[4] = t1;
         $[5] = t2;
         $[6] = t3;
-    }
-    else {
+    } else {
         t3 = $[6];
     }
     return t3;
 };
 
+// Function Outlining
 function _temp(option) {
     return _jsx(&quot;option&quot;, { value: option.value, children: option.label }, option.value);
 }
             </code>
           </pre>
         </section>
-        <section data-markdown>
-          <textarea data-template>
-            ## Sources
-            - https://react.dev/learn/react-compiler
-            - https://playground.react.dev
-            - https://x.com/sebastienlorber/status/1760345044353970631
-          </textarea>
+        <section>
+          <h4>Moving Progressive</h4>
+          <small>In case a component or hook doesn't work in beta phase:</small>
+          <pre>
+            <code class="language-typescript">
+{
+  loader: reactCompilerLoader,
+  options: defineReactCompilerLoaderOption({
+    sources: (filename) =&gt; {
+      return filename.indexOf('src/path/to/dir') !== -1;
+    },
+  }),
+}
+            </code>
+          </pre>
+          <small>We can directory/path based filter for gradual migration:</small>
+          <pre>
+            <code class="language-typescript">
+function SuspiciousComponent() {
+  &quot;use no memo&quot;; // opts out this component from being compiled by React Compiler
+  // ...
+}
+            </code>
+          </pre>
+        </section>
+        <section>
+          <h4>Whats Next?</h4>
+          <ul>
+              <li>✅ Experimental Release <i>(@experimental)</i></li>
+              <li>✅ Public Beta Release <i>(@beta)</i></li>
+              <li>RC Release</li>
+              <li>General Availability</li>
+          </ul>
+        </section>
+        <section>
+          <h3>Source List</h3>
+            <ul>
+              <li><a href="https://react.dev/learn/react-compiler">React Docs - React Compiler</a></li>
+              <li><a href="https://playground.react.dev">React Compiler Playground</a></li>
+              <li><a href="https://www.youtube.com/watch?v=lGEMwh32soc">Youtube - React without memo | Xuan Huang (黄玄)</a></li>
+              <li><a href="https://www.youtube.com/watch?v=uA_PVyZP7AI">Youtube - React Compiler Deep Dive | Mofei Zhang & Sathya Gunasekaran</a></li>
+              <li><a href="https://www.youtube.com/watch?v=qd5yk2gxbtg">Youtube - What's next for the React Compiler? | Sathya Gunasekaran</a></li>
+            </ul>
         </section>
       </div>
     </div>
