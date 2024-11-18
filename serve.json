@@ -3,6 +3,9 @@
     { "source": "/react-compiler-presentation/public/:id", "destination": "/public/:id" },
     { "source": "/react-compiler-presentation/src/styles/:id", "destination": "/src/styles/:id" },
     { "source": "/react-compiler-presentation/dist/:id", "destination": "/dist/:id" },
-    { "source": "/react-compiler-presentation/:id", "destination": ":id" }
+    { "source": "/react-compiler-presentation/:id", "destination": "./:id.html" }
+  ],
+  "redirects": [
+    { "source": "/react-compiler-presentation", "destination": "index.html" }
   ]
 }
